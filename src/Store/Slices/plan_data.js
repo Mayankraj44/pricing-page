@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
   plans: null,
+  connected: true,
 };
 
 const plandataslice = createSlice({
@@ -12,10 +13,13 @@ const plandataslice = createSlice({
     setPlanDataState: (state, action) => {
       state.plans = action.payload;
     },
+    setNetworkStatusState: (state, action) => {
+      state.connected = action.payload;
+    },
   },
 });
 
-const { setPlanDataState } = plandataslice.actions;
+const { setPlanDataState, setNetworkStatusState } = plandataslice.actions;
 
 const setPlanData = () => (dispatch) => {
   axios
@@ -26,8 +30,14 @@ const setPlanData = () => (dispatch) => {
     .catch((err) => console.error(err));
 };
 
-const getPlanDataState = (state) => state.plandataslice.plans;
+const setNetworkStatus = (value) => (dispatch) => {
+  dispatch(setNetworkStatusState(value));
+};
 
-export { setPlanData, getPlanDataState };
+const getPlansData = (state) => state.plandataslice.plans;
+
+const getNetworkStatus = (state) => state.plandataslice.connected;
+
+export { setPlanData, getPlansData, setNetworkStatus, getNetworkStatus };
 
 export default plandataslice.reducer;
