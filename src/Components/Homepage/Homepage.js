@@ -6,14 +6,16 @@ import {
   getPlansData,
   setPlanData,
 } from "../../Store/Slices/plan_data";
-import { getSelectedCategory } from "../../Store/Slices/plan_slice";
 import Nointernet from "../Nointernet/no_internet";
 import Categorycards from "../Plancards/category_cards_list";
 import Tabs from "../Tabs/tabs";
+import Modalwrapper from "../Modals/modal_wrapper";
+import Modalform from "../Modals/modal_form";
+import { getModalVisibleState } from "../../Store/Slices/modal_slice";
 
 const Homepage = () => {
   const plans = useSelector(getPlansData);
-  const selected_category = useSelector(getSelectedCategory);
+  const visible = useSelector(getModalVisibleState);
   const isOnline = useSelector(getNetworkStatus);
   const dispatch = useDispatch();
 
@@ -23,12 +25,16 @@ const Homepage = () => {
     }
   }, [plans, dispatch]);
 
-  console.log("Status", isOnline, plans, selected_category);
-
   return (
     <>
       <Tabs />
       {plans ? <Categorycards /> : <p>Loading..</p>}
+      {visible && (
+        <Modalwrapper>
+          <Modalform />
+        </Modalwrapper>
+      )}
+      <BackTop></BackTop>
       <BackTop />
       {!isOnline && <Nointernet />}
     </>
