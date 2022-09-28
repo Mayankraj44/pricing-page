@@ -1,7 +1,6 @@
 import { Button, Card } from "antd";
 import React from "react";
 import "./plancards.css";
-import "antd/dist/antd.css";
 import { useDispatch } from "react-redux";
 import { setSelectedPlan } from "../../Store/Slices/plan_slice";
 import { setModalVisible } from "../../Store/Slices/modal_slice";
@@ -25,7 +24,7 @@ const Plancard = (props) => {
     <Card.Grid className="grid-style" hoverable={false}>
       {data ? (
         <>
-        {/* check for most popular plan in the price range (took 2nd element here) */}
+          {/* check for most popular plan in the price range (took 2nd element here) */}
           {is_popular ? (
             <div className="popular-head">Most Popular!</div>
           ) : (
@@ -34,16 +33,22 @@ const Plancard = (props) => {
 
           <div className="plan-name">{data["plan_name"]}</div>
           <div className={is_popular ? "mid-content-popular" : "mid-content"}>
-            <p className="price-value">{HELPERS.formatToCurrency(data.price_per_live_transfer)}</p>
+            <p className="price-value">
+              {HELPERS.formatToCurrency(data.price_per_live_transfer)}
+            </p>
             <p className="mid-content-text1">Per Qualified Lead</p>
             <hr className="dotted" />
             <p className="mid-content-text">Qualified Leads Per Month</p>
             <p className="data-value">{data.leads_per_month}</p>
             <hr className="dotted" />
             <p className="mid-content-text">Platform Fee Per Month</p>
-            <p className="data-value">{HELPERS.formatToCurrency(data.total_platform_price)}</p>
+            <p className="data-value">
+              {HELPERS.formatToCurrency(data.total_platform_price)}
+            </p>
           </div>
-          <div className="plan-total">{HELPERS.formatToCurrency(data.final_package_price) + "/mo"}</div>
+          <div className="plan-total">
+            {HELPERS.formatToCurrency(data.final_package_price) + "/mo"}
+          </div>
 
           <Button
             className={is_popular ? "btn-class-popular" : "btn-class"}
